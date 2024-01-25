@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retirement Projection</title>
+  <!-- Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #34495e;
+      padding: 0.5em;
+    }
+
+    nav button {
+      background-color: #2c3e50;
+      color: #fff;
+      border: none;
+      padding: 0.5em 1em;
+      margin: 0 1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    nav button:hover {
+      background-color: #34495e;
+    }
+
+    .tabcontent {
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #2c3e50;
+      margin-bottom: 1em;
+    }
+
+    label {
+      display: block;
+      margin-top: 0.5em;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 0.5em;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #finalValue {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #27ae60; /* Dark Green */
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    #finalContribution {
+      font-size: 24px;
+      margin-top: 20px;
+      color: #27ae60; /* Dark Green */
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    /* Add additional styling as needed */
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Retirement Projection</h1>
+</header>
+
+<nav>
+  <button onclick="openTab('Value')">Value</button>
+  <button onclick="openTab('Age')">Age</button>
+  <button onclick="openTab('Contribution')">Contribution</button>
+</nav>
+
+<!-- Value Tab -->
+<div id="Value" class="tabcontent">
+  
+  <div style="display: flex; justify-content: stretch; align-items: top;">
+    
+    <div style="flex: 1; margin-right: 1em; min-width: 250px; max-width: 300px;">
+      <h2>Value Projection</h2>
+      <label for="currentPortfolio">Current Portfolio Value ($):</label>
+      <input type="number" id="currentPortfolio" placeholder="Enter current portfolio value" value="100000">
+
+      <label for="currentAge">Current Age:</label>
+      <input type="number" id="currentAge" placeholder="Enter current age" value="30">
+
+      <label for="retirementAge">Retirement Age:</label>
+      <input type="number" id="retirementAge" placeholder="Enter retirement age" value="65">
+
+      <label for="rateOfReturn">Rate of Return (% per year):</label>
+      <input type="number" id="rateOfReturn" placeholder="Enter rate of return" value="6">
+
+      <label for="monthlyContributions">Monthly Contributions ($):</label>
+      <input type="number" id="monthlyContributions" placeholder="Enter monthly contributions" value="500">
+      <div id="finalValue" class="ticker">Projection will show here</div>
+    </div>
+    <div style="flex: 1;">
+      <!-- Plotly graph container -->
+      <div id="valueGraph"></div>
+    </div>
+  </div>
+</div>
+
+<div id="Age" class="tabcontent">
+  <h2>Age Projection</h2>
+</div>
+
+<div id="Contribution" class="tabcontent">
+  
+  <div style="display: flex; justify-content: stretch; align-items: top;">
+    
+    <div style="flex: 1; margin-right: 1em; min-width: 300px; max-width: 350px;">
+      <h2>Contribution Projection</h2>
+      <label for="currentPortfolioContribution">Current Portfolio Value ($):</label>
+      <input type="number" id="currentPortfolioContribution" placeholder="Enter current portfolio value" value="100000">
+
+      <label for="currentAgeContribution">Current Age:</label>
+      <input type="number" id="currentAgeContribution" placeholder="Enter current age" value="30">
+
+      <label for="retirementAgeContribution">Retirement Age:</label>
+      <input type="number" id="retirementAgeContribution" placeholder="Enter retirement age" value="65">
+
+      <label for="rateOfReturnContribution">Rate of Return (% per year):</label>
+      <input type="number" id="rateOfReturnContribution" placeholder="Enter rate of return" value="6">
+
+      <label for="monthlyContributionsContribution">Current Monthly Contributions ($):</label>
+      <input type="number" id="monthlyContributionsContribution" placeholder="Enter monthly contributions" value="500">
+
+      <label for="desiredNestEggContribution">Desired Nest Egg ($):</label>
+      <input type="number" id="desiredNestEggContribution" placeholder="Enter desired portfolio value in retirement..." value="3000000">
+
+      <div id="finalContribution" class="ticker">Some Projection</div>
+    </div>
+    <div style="flex: 1;">
+      <!-- Plotly graph container -->
+      <div id="contributionGraph"></div>
+    </div>
+  </div>
+</div>
+
+<script src="static/value.js"></script>
+<script src="static/contribution.js"></script>
+<script>
+  function openTab(tabName) {
+    var i, tabcontent;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    document.getElementById(tabName).style.display = "block";
+};
+openTab('Contribution');
+</script>
+</body>
+</html>
